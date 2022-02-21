@@ -10,8 +10,8 @@ import (
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	_ "github.com/qanda/server/internal/statik"
-	"github.com/qanda/server/pkg/log"
+	_ "github.com/castlemilk/qanda/server/internal/statik"
+	"github.com/castlemilk/qanda/server/pkg/log"
 	statikfs "github.com/rakyll/statik/fs"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -84,14 +84,14 @@ func (s *questionServer) newgRPCServer(ctx context.Context, logger *log.Logger) 
 			grpc_zap.StreamServerInterceptor(zapLogger, opts...),
 		),
 	)
-	questionpb.RegisterquestionServiceServer(grpcServer, s)
+	questionpb.RegisterQuestionServiceServer(grpcServer, s)
 	reflection.Register(grpcServer)
 	return grpcServer
 }
 
 func (s *questionServer) newHTTPHandler(ctx context.Context, address string) (*http.ServeMux, error) {
 	gwmux := runtime.NewServeMux(runtime.WithMarshalerOption("application/json+pretty", &runtime.JSONPb{MarshalOptions: protojson.MarshalOptions{Indent: " "}}))
-	if err := questionpb.RegisterquestionServiceHandlerFromEndpoint(ctx, gwmux, address, []grpc.DialOption{grpc.WithInsecure()}); err != nil {
+	if err := questionpb.RegisterQuestionServiceHandlerFromEndpoint(ctx, gwmux, address, []grpc.DialOption{grpc.WithInsecure()}); err != nil {
 		return nil, err
 	}
 	mux := http.NewServeMux()

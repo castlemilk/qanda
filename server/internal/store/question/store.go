@@ -1,7 +1,7 @@
 package question
 
 import (
-	questionsv1alpha1 "github.com/qanda/server/pkg/question/v1alpha1"
+	questionsv1alpha1 "github.com/castlemilk/qanda/server/pkg/question/v1alpha1"
 )
 
 type StorageType string
@@ -12,9 +12,9 @@ const (
 )
 
 type Store interface {
-	Get(string) (*questionsv1alpha1.questionDetails, error)
-	Create(questionsv1alpha1.questionDetails) (*questionsv1alpha1.questionDetails, error)
-	Delete(string) (*questionsv1alpha1.questionDetails, error)
+	Get(string) (*questionsv1alpha1.Question, error)
+	Create(questionsv1alpha1.Question) (*questionsv1alpha1.Question, error)
+	Delete(string) (*questionsv1alpha1.Question, error)
 }
 
 func NewStore(t StorageType) Store {

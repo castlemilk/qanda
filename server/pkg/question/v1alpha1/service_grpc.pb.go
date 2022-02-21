@@ -18,15 +18,15 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionServiceClient interface {
-	// A unary RPC used to fetch a list of existing watches
+	// A unary RPC used to fetch a list of existing questiones
 	ListQuestions(ctx context.Context, in *ListQuestionsRequest, opts ...grpc.CallOption) (*ListQuestionsResponse, error)
-	// A unary RPC used to fetch a specific Questionby watch ID
+	// A unary RPC used to fetch a specific Questionby question ID
 	GetQuestion(ctx context.Context, in *GetQuestionRequest, opts ...grpc.CallOption) (*GetQuestionResponse, error)
-	// A unary RPC to create a new watch source.
+	// A unary RPC to create a new question source.
 	CreateQuestion(ctx context.Context, in *CreateQuestionRequest, opts ...grpc.CallOption) (*CreateQuestionResponse, error)
-	// A unary RPC to delete a watch source.
+	// A unary RPC to delete a question source.
 	DeleteQuestion(ctx context.Context, in *DeleteQuestionRequest, opts ...grpc.CallOption) (*DeleteQuestionResponse, error)
-	// A unary RPC to update an existing watch.
+	// A unary RPC to update an existing question.
 	UpdateQuestion(ctx context.Context, in *UpdateQuestionRequest, opts ...grpc.CallOption) (*UpdateQuestionResponse, error)
 }
 
@@ -87,15 +87,15 @@ func (c *questionServiceClient) UpdateQuestion(ctx context.Context, in *UpdateQu
 // All implementations must embed UnimplementedQuestionServiceServer
 // for forward compatibility
 type QuestionServiceServer interface {
-	// A unary RPC used to fetch a list of existing watches
+	// A unary RPC used to fetch a list of existing questiones
 	ListQuestions(context.Context, *ListQuestionsRequest) (*ListQuestionsResponse, error)
-	// A unary RPC used to fetch a specific Questionby watch ID
+	// A unary RPC used to fetch a specific Questionby question ID
 	GetQuestion(context.Context, *GetQuestionRequest) (*GetQuestionResponse, error)
-	// A unary RPC to create a new watch source.
+	// A unary RPC to create a new question source.
 	CreateQuestion(context.Context, *CreateQuestionRequest) (*CreateQuestionResponse, error)
-	// A unary RPC to delete a watch source.
+	// A unary RPC to delete a question source.
 	DeleteQuestion(context.Context, *DeleteQuestionRequest) (*DeleteQuestionResponse, error)
-	// A unary RPC to update an existing watch.
+	// A unary RPC to update an existing question.
 	UpdateQuestion(context.Context, *UpdateQuestionRequest) (*UpdateQuestionResponse, error)
 	mustEmbedUnimplementedQuestionServiceServer()
 }

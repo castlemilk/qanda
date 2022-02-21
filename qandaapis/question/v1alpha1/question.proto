@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package questions.v1alpha1;
+
+option go_package = "github.com/castlemilk/qanda/server/pkg/questions/v1alpha1;questionsv1alpha1";
+
+import "google/protobuf/timestamp.proto";
+import "api/v1alpha1/question.proto";
+
+
+message Question {
+  api.v1alpha1.Metadata metadata = 1;
+  api.v1alpha1.Author author = 2;
+  QuestionSpec spec = 3;
+}
+
+message QuestionSpec {
+  string content = 1;
+  repeated api.v1alpha1.Tag tags = 2;
+}

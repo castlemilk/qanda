@@ -16,8 +16,8 @@ import (
 )
 
 type Config struct {
-	AppSpec echo.Config `json:"app"   yaml:"app"    mapstructure:"app" validate:"required,dive"`
-	OpsSpec ops.Spec    `json:"ops" yaml:"ops" mapstructure:"ops" validate:"required,dive"`
+	AppSpec question.Config `json:"app"   yaml:"app"    mapstructure:"app" validate:"required,dive"`
+	OpsSpec ops.Spec        `json:"ops" yaml:"ops" mapstructure:"ops" validate:"required,dive"`
 }
 
 const (
@@ -44,7 +44,7 @@ func Load() (*Config, error) {
 func load(v *viper.Viper, f *flag.FlagSet) (*Config, error) {
 	var config Config
 
-	v.SetDefault(appSpec, getMap(echo.DefaultConfig()))
+	v.SetDefault(appSpec, getMap(question.DefaultConfig()))
 	v.SetDefault(opsSpec, getMap(ops.Default()))
 
 	configFile, _ := f.GetString("config")
@@ -81,14 +81,14 @@ func registerEnv(v *viper.Viper) {
 	_ = v.BindEnv("config", "CONFIG_PATH")
 
 	ops.Env(v, opsSpec, strings.ToUpper(opsSpec))
-	echo.Env(v, appSpec, strings.ToUpper((appSpec)))
+	question.Env(v, appSpec, strings.ToUpper((appSpec)))
 
 }
 
 func registerFlags(f *flag.FlagSet) {
 	f.StringP("config", "c", "", "configuration path to use for server")
 	ops.Flags(f, opsSpec)
-	echo.Flags(f, appSpec)
+	question.Flags(f, appSpec)
 }
 
 // getMap - converts struct into map, required for viper to correctly load

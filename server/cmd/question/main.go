@@ -42,7 +42,7 @@ func main() {
 		Handler: opsMux,
 	}
 	registerOps(cfg, opsMux, healthServer)
-	s, err := echo.New(ctx, cfg.AppSpec)
+	s, err := question.New(ctx, cfg.AppSpec)
 	g, gCtx := errgroup.WithContext(ctx)
 	healthServer.SetAlive(true)
 	g.Go(func() error {

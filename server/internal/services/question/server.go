@@ -3,9 +3,9 @@ package question
 import (
 	"context"
 
+	"github.com/castlemilk/qanda/server/internal/store/question"
+	questionpb "github.com/castlemilk/qanda/server/pkg/question/v1alpha1"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
-	"github.com/qanda/server/internal/store/question"
-	questionpb "github.com/qanda/server/pkg/question/v1alpha1"
 	"google.golang.org/grpc"
 )
 
@@ -13,7 +13,7 @@ import (
 type questionServer struct {
 	config Config
 	store  question.Store
-	questionpb.UnimplementedquestionServiceServer
+	questionpb.UnimplementedQuestionServiceServer
 	*grpcweb.WrappedGrpcServer
 }
 

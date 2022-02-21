@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package questions.v1alpha1;
+
+option go_package = "github.com/castlemilk/qanda/server/pkg/questions/v1alpha1;questionsv1alpha1";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "question/v1alpha1/question.proto";
+
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    version: "v1alpha1";
+  };
+  external_docs: {
+    url: "https://github.com/castlemilk/qanda/qandaapis/questions/v1alpha1/";
+    description: "Questions API";
+  }
+  schemes: HTTPS;
+};
+
+service QuestionService {
+  // A unary RPC used to fetch a list of existing questiones
+  rpc ListQuestions(ListQuestionsRequest) returns (ListQuestionsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/question"
+  };
+  }
+  // A unary RPC used to fetch a specific Questionby question ID
+  rpc GetQuestion(GetQuestionRequest) returns (GetQuestionResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/question/{id}"
+  };
+  }
+  // A unary RPC to create a new question source. 
+  rpc CreateQuestion(CreateQuestionRequest) returns (CreateQuestionResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/question"
+      body: "*"
+  };
+  }
+  // A unary RPC to delete a question source. 
+  rpc DeleteQuestion(DeleteQuestionRequest) returns (DeleteQuestionResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/question/{id}"
+  };
+  }
+  // A unary RPC to update an existing question. 
+  rpc UpdateQuestion(UpdateQuestionRequest) returns (UpdateQuestionResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/question/{id}"
+      body: "*"
+  };
+  }
+}
+
+
+// ------------ LIST ------------
+// ListQuestionsRequest
+message ListQuestionsRequest {
+
+}
+
+message ListQuestionsResponse {
+  repeated Question questions = 1;
+}
+
+// ------------ GET ------------
+message GetQuestionRequest {
+  string id = 1;
+}
+
+message GetQuestionResponse {
+  Question question = 1;
+}
+
+//------------ CREATE ------------
+
+message CreateQuestionRequest {
+  Question question = 1;
+}
+
+message CreateQuestionResponse {
+  Question question = 1;
+}
+
+
+//------------ UPDATE ------------
+
+message UpdateQuestionRequest {
+  string id = 1;
+  Question question = 2;
+}
+
+message UpdateQuestionResponse {
+  Question question = 1;
+}
+
+//------------ DELETE ------------
+
+message DeleteQuestionRequest {
+  string id = 1;
+}
+
+message DeleteQuestionResponse {
+  Question question = 1;
+}

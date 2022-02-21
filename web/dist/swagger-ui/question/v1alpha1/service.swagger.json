@@ -1,0 +1,342 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "question/v1alpha1/service.proto",
+    "version": "v1alpha1"
+  },
+  "tags": [
+    {
+      "name": "QuestionService"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/question": {
+      "get": {
+        "summary": "A unary RPC used to fetch a list of existing questiones",
+        "operationId": "QuestionService_ListQuestions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1ListQuestionsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "QuestionService"
+        ]
+      },
+      "post": {
+        "summary": "A unary RPC to create a new question source.",
+        "operationId": "QuestionService_CreateQuestion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1CreateQuestionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1alpha1CreateQuestionRequest"
+            }
+          }
+        ],
+        "tags": [
+          "QuestionService"
+        ]
+      }
+    },
+    "/api/v1/question/{id}": {
+      "get": {
+        "summary": "A unary RPC used to fetch a specific Questionby question ID",
+        "operationId": "QuestionService_GetQuestion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1GetQuestionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QuestionService"
+        ]
+      },
+      "delete": {
+        "summary": "A unary RPC to delete a question source.",
+        "operationId": "QuestionService_DeleteQuestion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1DeleteQuestionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QuestionService"
+        ]
+      },
+      "post": {
+        "summary": "A unary RPC to update an existing question.",
+        "operationId": "QuestionService_UpdateQuestion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1UpdateQuestionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "question": {
+                  "$ref": "#/definitions/v1alpha1Question"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "QuestionService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "apiv1alpha1Tag": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1alpha1Metadata"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1alpha1Author": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1alpha1Metadata"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "v1alpha1CreateQuestionRequest": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "$ref": "#/definitions/v1alpha1Question"
+        }
+      }
+    },
+    "v1alpha1CreateQuestionResponse": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "$ref": "#/definitions/v1alpha1Question"
+        }
+      }
+    },
+    "v1alpha1DeleteQuestionResponse": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "$ref": "#/definitions/v1alpha1Question"
+        }
+      }
+    },
+    "v1alpha1GetQuestionResponse": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "$ref": "#/definitions/v1alpha1Question"
+        }
+      }
+    },
+    "v1alpha1ListQuestionsResponse": {
+      "type": "object",
+      "properties": {
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1alpha1Question"
+          }
+        }
+      }
+    },
+    "v1alpha1Metadata": {
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1alpha1Question": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1alpha1Metadata"
+        },
+        "author": {
+          "$ref": "#/definitions/v1alpha1Author"
+        },
+        "spec": {
+          "$ref": "#/definitions/v1alpha1QuestionSpec"
+        }
+      }
+    },
+    "v1alpha1QuestionSpec": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiv1alpha1Tag"
+          }
+        }
+      }
+    },
+    "v1alpha1UpdateQuestionResponse": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "$ref": "#/definitions/v1alpha1Question"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Questions API",
+    "url": "https://github.com/castlemilk/qanda/qandaapis/questions/v1alpha1/"
+  }
+}
