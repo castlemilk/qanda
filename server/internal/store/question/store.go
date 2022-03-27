@@ -17,7 +17,7 @@ type Store interface {
 	Delete(string) (*questionsv1alpha1.Question, error)
 }
 
-func NewStore(t StorageType) Store {
+func NewStore(t StorageType) (Store, error) {
 	switch t {
 	case MemoryStorage:
 		return newMemoryStorage( /*...*/ )

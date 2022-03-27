@@ -9,12 +9,12 @@ import (
 )
 
 func TestNewStore(t *testing.T) {
-	store := newMemoryStorage()
+	store, _ := newMemoryStorage()
 	assert.Equal(t, store, memoryStore{questions: map[string]questionsv1alpha1.Question{}}, "should be equal")
 }
 
 func TestCreatequestion(t *testing.T) {
-	store := newMemoryStorage()
+	store, _ := newMemoryStorage()
 	want := questiontest.Newquestion()
 	store.Create(want)
 	got, _ := store.Get(want.Metadata.Id)
@@ -22,7 +22,7 @@ func TestCreatequestion(t *testing.T) {
 }
 
 func TestDeletequestion(t *testing.T) {
-	store := newMemoryStorage()
+	store, _ := newMemoryStorage()
 	want := questiontest.Newquestion()
 	store.Create(want)
 	got, _ := store.Delete(want.Metadata.Id)

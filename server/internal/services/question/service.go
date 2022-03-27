@@ -15,7 +15,7 @@ import (
 // validate ServerServer implements questionpb.ServerService
 var _ questionpb.QuestionServiceServer = (*questionServer)(nil)
 
-func (s *questionServer) Getquestion(ctx context.Context, msg *questionpb.GetQuestionRequest) (*questionpb.GetQuestionResponse, error) {
+func (s *questionServer) GetQuestion(ctx context.Context, msg *questionpb.GetQuestionRequest) (*questionpb.GetQuestionResponse, error) {
 	log.Infof("get question")
 	question, err := s.store.Get(msg.GetId())
 	if err != nil {
@@ -24,7 +24,7 @@ func (s *questionServer) Getquestion(ctx context.Context, msg *questionpb.GetQue
 	return &questionpb.GetQuestionResponse{Question: question}, nil
 }
 
-func (s *questionServer) Createquestion(ctx context.Context, msg *questionpb.CreateQuestionRequest) (*questionpb.CreateQuestionResponse, error) {
+func (s *questionServer) CreateQuestion(ctx context.Context, msg *questionpb.CreateQuestionRequest) (*questionpb.CreateQuestionResponse, error) {
 	log.Infof("create question")
 	msg.Question.Metadata.Id = uuid.NewString()
 	msg.Question.Metadata.CreatedAt = time.Now().Unix()

@@ -1,4 +1,4 @@
-package question 
+package question
 
 import (
 	"fmt"
@@ -9,8 +9,9 @@ import (
 
 // Config provided to the Echo service for initialisation
 type Config struct {
-	Insecure bool `json:"insecure"        yaml:"insecure"     mapstructure:"insecure"`
-	Port     int  `json:"port"            yaml:"port"         mapstructure:"port" validate:"gte=8000"`
+	Insecure    bool   `json:"insecure"        yaml:"insecure"     mapstructure:"insecure"`
+	Port        int    `json:"port"            yaml:"port"         mapstructure:"port" validate:"gte=8000"`
+	Credentials string `json:"credentials" yaml: "credentials" mapstructure:"credentials" validate:"required"`
 }
 
 const (
@@ -23,6 +24,7 @@ func DefaultConfig() Config {
 	return Config{
 		Insecure: defaultInsecure,
 		Port:     defaultPort,
+		Credentials: "",
 	}
 }
 
@@ -30,6 +32,7 @@ func DefaultConfig() Config {
 func Env(v *viper.Viper, cfgPrefix, envPrefix string) {
 	_ = v.BindEnv(fmt.Sprintf("%s.port", cfgPrefix), fmt.Sprintf("%s_PORT", envPrefix))
 	_ = v.BindEnv(fmt.Sprintf("%s.insecure", cfgPrefix), fmt.Sprintf("%s_INSECURE", envPrefix))
+	_ = v.BindEnv(fmt.Sprintf("%s.credentials", cfgPrefix), "GOOGLE_APPLICATION_CREDENTIALS")
 }
 
 // Flags binds flags to main configuration struct populated by viper

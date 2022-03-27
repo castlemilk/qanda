@@ -10,8 +10,8 @@ type memoryStore struct {
 	questions map[string]questionsv1alpha1.Question
 }
 
-func newMemoryStorage() Store {
-	return memoryStore{questions: map[string]questionsv1alpha1.Question{}}
+func newMemoryStorage() (Store, error) {
+	return memoryStore{questions: map[string]questionsv1alpha1.Question{}}, nil
 }
 
 func (s memoryStore) Get(id string) (*questionsv1alpha1.Question, error) {
