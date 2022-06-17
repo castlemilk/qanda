@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package answers.v1alpha1;
+
+option go_package = "github.com/castlemilk/qanda/server/pkg/answers/v1alpha1;answersv1alpha1";
+
+import "google/protobuf/timestamp.proto";
+import "api/v1alpha1/metadata.proto";
+import "api/v1alpha1/tag.proto";
+import "api/v1alpha1/content.proto";
+import "author/v1alpha1/author.proto";
+
+
+message Answer {
+  api.v1alpha1.Metadata metadata = 1;
+  author.v1alpha1.Author author = 2;
+  AnswerSpec spec = 3;
+}
+
+message AnswerSpec {
+  api.v1alpha1.Content content = 1;
+  repeated api.v1alpha1.Tag tags = 2;
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package author.v1alpha1;
+
+option go_package = "github.com/castlemilk/qanda/server/pkg/author/v1alpha1;authorv1alpha1";
+
+import "google/protobuf/duration.proto";
+import "validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "api/v1alpha1/metadata.proto";
+
+
+
+message Author {
+  string id = 2 [(validate.rules).string.uuid = true];
+}
+
+message AuthorDetails {
+    api.v1alpha1.Metadata metadata = 1;
+    string name = 2;
+}

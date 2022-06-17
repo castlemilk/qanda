@@ -221,11 +221,34 @@
     "v1alpha1Author": {
       "type": "object",
       "properties": {
-        "metadata": {
-          "$ref": "#/definitions/v1alpha1Metadata"
-        },
-        "name": {
+        "id": {
           "type": "string"
+        }
+      }
+    },
+    "v1alpha1Content": {
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "s3": {
+          "$ref": "#/definitions/v1alpha1S3"
+        },
+        "text": {
+          "$ref": "#/definitions/v1alpha1Text"
         }
       }
     },
@@ -316,13 +339,29 @@
       "type": "object",
       "properties": {
         "content": {
-          "type": "string"
+          "$ref": "#/definitions/v1alpha1Content"
         },
         "tags": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/apiv1alpha1Tag"
           }
+        }
+      }
+    },
+    "v1alpha1S3": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "v1alpha1Text": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
         }
       }
     },

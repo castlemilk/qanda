@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package api.v1alpha1;
+
+option go_package = "github.com/castlemilk/qanda/server/pkg/api/v1alpha1;apiv1alpha1";
+
+import "api/v1alpha1/metadata.proto";
+
+message Tag {
+  Metadata metadata = 1;
+  string value = 2;
+}

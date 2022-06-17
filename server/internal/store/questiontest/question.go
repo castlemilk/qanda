@@ -10,5 +10,5 @@ func Newquestion() questionsv1alpha1.Question {
 	return questionsv1alpha1.Question{Metadata: &apiv1alpha1.Metadata{
 		Id:   uuid.NewString(),
 		Name: "test",
-	}, Spec: &questionsv1alpha1.QuestionSpec{Content: "test", Tags: []*apiv1alpha1.Tag{}}}
+	}, Spec: &questionsv1alpha1.QuestionSpec{Content: &apiv1alpha1.Content{Content: &apiv1alpha1.Content_Text{Text: &apiv1alpha1.Text{Value: "test"}}}, Tags: []*apiv1alpha1.Tag{}}}
 }
