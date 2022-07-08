@@ -30,7 +30,16 @@ func (s *questionServer) CreateQuestion(ctx context.Context, msg *questionpb.Cre
 	msg.Question.Metadata.CreatedAt = time.Now().Unix()
 	question, err := s.store.Create(*msg.GetQuestion())
 	if err != nil {
-		return &questionpb.CreateQuestionResponse{}, fmt.Errorf("error get question, id: %s", question)
+		return &questionpb.CreateQuestionResponse{}, fmt.Errorf("error create question, id: %s, error: %+v", question, err)
 	}
 	return &questionpb.CreateQuestionResponse{Question: question}, nil
+}
+
+func (s *questionServer) ListQuestions(ctx context.Context, msg *questionpb.ListQuestionsRequest) (*questionpb.ListQuestionsResponse, error) {
+	log.Infof("list questions")
+	question, err := s.store.List()	
+	if err != nil {
+		return &questionpb.ListQuestionsResponse{Questions: nil}, fmt.Errorf("error get question, id: %s", question)
+	}
+	return &questionpb.ListQuestionsResponse{Questions: question}, nil
 }

@@ -3,6 +3,7 @@ package question
 import (
 	"fmt"
 
+	"github.com/castlemilk/qanda/server/pkg/log"
 	questionsv1alpha1 "github.com/castlemilk/qanda/server/pkg/question/v1alpha1"
 )
 
@@ -20,6 +21,17 @@ func (s memoryStore) Get(id string) (*questionsv1alpha1.Question, error) {
 	}
 
 	return &questionsv1alpha1.Question{}, fmt.Errorf("no question question found with id: %s", id)
+}
+
+func (s memoryStore) List() ([]*questionsv1alpha1.Question, error) {
+
+	values := make([]*questionsv1alpha1.Question, 0, len(s.questions))
+	log.Infof("values: %+v", s.questions)
+	for _, v := range s.questions {
+		values = append(values, &v)
+	}
+
+	return values, nil
 }
 
 func (s memoryStore) Create(question questionsv1alpha1.Question) (*questionsv1alpha1.Question, error) {

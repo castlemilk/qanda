@@ -13,6 +13,7 @@ const (
 
 type Store interface {
 	Get(string) (*questionsv1alpha1.Question, error)
+	List() ([]*questionsv1alpha1.Question, error)
 	Create(questionsv1alpha1.Question) (*questionsv1alpha1.Question, error)
 	Delete(string) (*questionsv1alpha1.Question, error)
 }
