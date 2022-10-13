@@ -8,7 +8,10 @@ run.question.fb:
 run.question:
 	go run cmd/question/main.go	
 test.local.qanda.create:
-	grpcurl -plaintext -d '{"question":{"metadata":{"name":"string"},"author":{"id":"string"},"spec":{"content":{"text": {"value": "string"}}}}}' localhost:8080 questions.v1alpha1.QuestionService/CreateQuestion
+	grpcurl -plaintext -d '{"question":{"metadata":{"name":"string"},"author":{"id":"string"},"spec":{"content":{"text": {"value": "string"}}}}}' localhost:8080 questions.v1alpha1.QuestionService/CreateQuestion | jq -r '.question.metadata.id'
+test.local.qanda.e2e:
+	ID=`grpcurl -plaintext -d '{"question":{"metadata":{"name":"string"},"author":{"id":"string"},"spec":{"content":{"text": {"value": "string"}}}}}' localhost:8080 questions.v1alpha1.QuestionService/CreateQuestion | jq -r '.question.metadata.id'`; \
+	grpcurl -plaintext -d '{ "id": "'$$ID'" }' localhost:8080 questions.v1alpha1.QuestionService/GetQuestion
 test.local.qanda.list:
 		grpcurl -plaintext localhost:8080 questions.v1alpha1.QuestionService/ListQuestions
 test.local.qanda.get:

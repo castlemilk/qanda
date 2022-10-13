@@ -39,11 +39,11 @@ func (s memoryStore) Create(question questionsv1alpha1.Question) (*questionsv1al
 	return &question, nil
 }
 
-func (s memoryStore) Delete(id string) (*questionsv1alpha1.Question, error) {
-	question, err := s.Get(id)
+func (s memoryStore) Delete(id string) (string, error) {
+	_, err := s.Get(id)
 	if err != nil {
-		return &questionsv1alpha1.Question{}, err
+		return "", err
 	}
 	delete(s.questions, id)
-	return question, nil
+	return id, nil
 }

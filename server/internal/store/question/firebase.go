@@ -42,24 +42,23 @@ func (s firestoreStore) List() ([]*questionsv1alpha1.Question, error) {
 	iter := s.client.Collection(s.collection).Documents(context.TODO())
 	for {
 		q := &questionsv1alpha1.Question{}
-		// var q map[string]interface{}
 		doc, err := iter.Next()
 		if err == iterator.Done {
 			break
 		}
 		if err != nil {
-			return nil, err
+			return questions, err
 		}
 		log.Infof("found doc: %+v", doc.Data())
 
 		if err != nil {
 			log.Errorf("erroring unmarshalling object: %+v", err)
-			return nil, err
+			return questions, err
 		}
 		b, err := json.Marshal(doc.Data())
 
 		if err != nil {
-			return nil, err
+			return questions, err
 		}
 		jsonpb.Unmarshal(bytes.NewBuffer(b), q)
 		questions = append(questions, q)
@@ -70,16 +69,22 @@ func (s firestoreStore) List() ([]*questionsv1alpha1.Question, error) {
 }
 
 func (s firestoreStore) Get(id string) (*questionsv1alpha1.Question, error) {
+
+	// we need to unmarshalva jsonpb first
+
 	q := &questionsv1alpha1.Question{}
 	dsnap, err := s.client.Collection(s.collection).Doc(id).Get(context.TODO())
-	if err != nil {
-		return nil, err
-	}
+	
 	if status.Code(err) == codes.NotFound {
 		return q, fmt.Errorf("no question question found with id: %s", id)
 	}
+	if err != nil {
+		return  &questionsv1alpha1.Question{}, err
+	}
 	log.Infof("found item: %+v", dsnap.Data())
-	err = dsnap.DataTo(q)
+	data, err := json.Marshal(dsnap.Data())
+	u := jsonpb.Unmarshaler{}
+	u.Unmarshal(bytes.NewReader(data), q)
 
 	if err != nil {
 		log.Errorf("erroring unmarshalling object: %+v", err)
@@ -99,18 +104,24 @@ func (s firestoreStore) Create(question questionsv1alpha1.Question) (*questionsv
 	log.Infof("writing doc: %+v", inInterface)
 	_, err := s.client.Collection(s.collection).Doc(question.Metadata.Id).Set(context.TODO(), inInterface)
 	if err != nil {
-		return nil, err
+		return  &questionsv1alpha1.Question{}, err
 	}
 	return &question, nil
 }
 
-func (s firestoreStore) Delete(id string) (*questionsv1alpha1.Question, error) {
-	question, err := s.Get(id)
-	if err != nil {
-		return &questionsv1alpha1.Question{}, err
+func (s firestoreStore) Delete(id string) (string, error) {
+	_, err := s.client.Collection(s.collection).Doc(id).Delete(context.TODO())
+	if status.Code(err) == codes.NotFound {
+		return id, fmt.Errorf("no question question found with id: %s", id)
 	}
-	// delete(s.questions, id)
-	return question, nil
+	if err != nil {
+		return  id, err
+	}
+	if err != nil {
+		log.Errorf("erroring unmarshalling object: %+v", err)
+		return id, err
+	}
+	return id, nil
 }
 
 // func convertToFirebaseDoc(question questionsv1alpha1.Question) (*questionsv1alpha1.Question) {
